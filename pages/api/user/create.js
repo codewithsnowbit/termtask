@@ -22,7 +22,7 @@ async function checkUserCreated(req, res){
         })
         if(checkUserEntry.length > 0){
             return res.status(200).json({
-                message: 'User exists',
+                data: checkUserEntry[0],
                 new: false, 
                 success: true
             })

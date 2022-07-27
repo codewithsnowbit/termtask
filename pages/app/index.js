@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { UserButton } from '@clerk/nextjs'
+import LoginKeyCard from '../../components/LoginKeyCard'
 
 export default function AppHome() {
   const [loading, setLoading] = useState(true)
   const [greet, setGreet] = useState(true)
+  const [secretKey, setSecretKey] = useState('')
   useEffect(() => {
     async function createUser() {
       const response = await axios.post('/api/user/create', {
         uid: localStorage.getItem('uid'),
         tasks: "[]"
       })
+      setSecretKey(response.data.data.secretKey)
       if(response.data.success){
         setLoading(false)
       }
@@ -29,7 +32,7 @@ export default function AppHome() {
       <div className={`${loading ? "flex" : "hidden"} justify-center items-center min-h-screen text-4xl font-black animate-pulse`}>
         Loading...
       </div>
-        <div className={`max-w-screen-md mx-auto m-2 p-4 ${loading ? "hidden" : "block"}`}>
+        <div className={`max-w-screen-lg mx-auto m-2 p-4 ${loading ? "hidden" : "block"}`}>
             <div className="flex justify-between">
                 <div className="font-mono text-lg sm:text-2xl">
                     {"<TermTask />"}
@@ -44,6 +47,8 @@ export default function AppHome() {
                 </div>
             </div>
         </div>
+        <hr />
+        <LoginKeyCard secretKey={secretKey}/>
     </>
   )
 }
