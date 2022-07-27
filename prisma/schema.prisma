@@ -10,7 +10,7 @@ datasource db {
 }
 
 model User{
-  id          String @id @default(cuid())
+  id      Int   @default(autoincrement()) @id
   uid         String @unique
   tasks       String
   createdAt   DateTime @default(now())
