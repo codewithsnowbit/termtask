@@ -8,6 +8,7 @@ export default function AppHome() {
   const [loading, setLoading] = useState(true)
   const [greet, setGreet] = useState(true)
   const [secretKey, setSecretKey] = useState('')
+  const [tasks, setTasks] = useState([])
   useEffect(() => {
     async function createUser() {
       const response = await axios.post('/api/user/create', {
@@ -15,6 +16,7 @@ export default function AppHome() {
         tasks: "[]"
       })
       setSecretKey(response.data.data.secretKey)
+      setTasks(JSON.parse(response.data.data.tasks))
       if(response.data.success){
         setLoading(false)
       }
@@ -54,7 +56,7 @@ export default function AppHome() {
           <div className="p-3 font-bold text-xl">
             Tasks
           </div>
-          <TaskInput />
+          <TaskInput tasks={tasks}/>
         </div>
     </>
   )
