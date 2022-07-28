@@ -12,7 +12,7 @@ datasource db {
 model User{
   id      Int   @default(autoincrement()) @id
   uid         String @unique
-  tasks       String
+  tasks       String @default("[]")
   createdAt   DateTime @default(now())
   secretKey   String @default(cuid()) @unique
 }

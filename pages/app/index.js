@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { UserButton } from '@clerk/nextjs'
 import LoginKeyCard from '../../components/LoginKeyCard'
+import TaskInput from '../../components/TaskInput'
 
 export default function AppHome() {
   const [loading, setLoading] = useState(true)
@@ -49,6 +50,12 @@ export default function AppHome() {
         </div>
         <hr />
         <LoginKeyCard secretKey={secretKey}/>
+        <div className="max-w-screen-md mx-auto my-4">
+          <div className="p-3 font-bold text-xl">
+            Tasks
+          </div>
+          <TaskInput />
+        </div>
     </>
   )
 }
