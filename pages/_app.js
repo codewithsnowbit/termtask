@@ -15,11 +15,15 @@ function MyApp({ Component, pageProps }) {
   // Check if the current route matches a public page
   const isPublicPage = publicPages.includes(pathname);
   const GetUserDetails = () => {
-    const { userId } = useAuth();
+    const { userId, isSignedIn } = useAuth();
     
     useEffect(() => {
       async function getUserDetails() {
-        localStorage.setItem('uid', userId);
+        if(!isSignedIn){
+          localStorage.removeItem('uid')
+        }else{
+          localStorage.setItem('uid', userId)
+        }
       }
       getUserDetails();
     })
@@ -30,7 +34,10 @@ function MyApp({ Component, pageProps }) {
   return (
     <ClerkProvider>
       {isPublicPage ? (
+        <>
         <Component {...pageProps} />
+        <GetUserDetails />
+        </>
       ) : (
         <>
           <SignedIn>

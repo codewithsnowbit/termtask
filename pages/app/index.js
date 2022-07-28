@@ -3,6 +3,7 @@ import axios from 'axios'
 import { UserButton } from '@clerk/nextjs'
 import LoginKeyCard from '../../components/LoginKeyCard'
 import TaskInput from '../../components/TaskInput'
+import TaskCheckBox from '../../components/TaskCheckBox'
 
 export default function AppHome() {
   const [loading, setLoading] = useState(true)
@@ -17,6 +18,7 @@ export default function AppHome() {
       })
       setSecretKey(response.data.data.secretKey)
       setTasks(JSON.parse(response.data.data.tasks))
+      console.log(JSON.parse(response.data.data.tasks))
       if(response.data.success){
         setLoading(false)
       }
@@ -30,6 +32,11 @@ export default function AppHome() {
       }, 3000)
     }
   })
+  async function completeTask(){
+    await axios.post('/api/user/createtask', {
+      uid: localStorage.getItem('uid'),
+    })
+  }
   return (
     <>
       <div className={`${loading ? "flex" : "hidden"} justify-center items-center min-h-screen text-4xl font-black animate-pulse`}>
@@ -57,6 +64,11 @@ export default function AppHome() {
             Tasks
           </div>
           <TaskInput tasks={tasks}/>
+          {tasks.map((task, index) => {
+            return (
+              <TaskCheckBox task={task} onChange={completeTask}/>
+            )
+          })}
         </div>
     </>
   )

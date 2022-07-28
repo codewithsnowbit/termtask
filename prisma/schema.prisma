@@ -15,4 +15,5 @@ model User{
   tasks       String @default("[]")
   createdAt   DateTime @default(now())
   secretKey   String @default(cuid()) @unique
+  completedTasks String @default("[]")
 }

@@ -5,7 +5,10 @@ export default function TaskInput({tasks}) {
     async function createTask() {
         const response = await axios.post('/api/user/createtask', {
             uid: localStorage.getItem('uid'),
-            value: JSON.stringify([...tasks, taskValue])
+            value: JSON.stringify([...tasks, {
+                value: taskValue,
+                completed: false
+            }])
         })
         if(response.data.success){
             setTaskValue('')
