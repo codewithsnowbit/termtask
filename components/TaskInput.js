@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { v4 as uuidv4 } from "uuid";
 export default function TaskInput({tasks}) {
     const [taskValue, setTaskValue] = useState('')
     async function createTask() {
         const response = await axios.post('/api/user/createtask', {
             uid: localStorage.getItem('uid'),
             value: JSON.stringify([...tasks, {
+                id: uuidv4(),
                 value: taskValue,
-                completed: false
+                completed: false,
             }])
         })
         if(response.data.success){

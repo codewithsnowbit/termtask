@@ -63,12 +63,14 @@ export default function AppHome() {
           <div className="p-3 font-bold text-xl">
             Tasks
           </div>
-          <TaskInput tasks={tasks}/>
-          {tasks.map((task, index) => {
-            return (
-              <TaskCheckBox task={task} onChange={completeTask}/>
-            )
-          })}
+          <div className="max-w-screen-md mx-auto m-2 p-4">
+            <TaskInput tasks={tasks}/>
+            {tasks.map((task, index) => {
+              return (
+                <TaskCheckBox task={task} onChange={completeTask} key={index}/>
+              )
+            })}
+          </div>
         </div>
     </>
   )
